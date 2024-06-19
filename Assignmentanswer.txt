@@ -1,0 +1,31 @@
+1. Explain the Highlighted Construct?
+
+Ans: The outer for loop runs 4 times, which means it creates 4 separate goroutines.
+Each iteration of the loop starts a new goroutine using go func() { ... }().
+Inside each goroutine, there is an infinite for loop that reads from the channel cnp.
+The for f := range cnp loop blocks and waits for values (functions) to be sent to the cnp channel.
+When a function f is received from the channel, it is executed with f().
+
+-----------------------------------------------------------------------------------------------------------------------
+2. Giving use-cases of what these constructs could be used for.?
+
+This approach is useful to process large tasks into batches. Collecting individual work items and distribute them amongst workers for concurrent processing. In this case we have 4 worker which are responsible for 10 tasks per batch.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+3. What is the significance of the for loop with 4 iterations?
+
+The significance of the for loop with 4 iterations in your Go code is to create a pool of 4 worker goroutines that can process tasks concurrently. 
+
+------------------------------------------------------------------------------------------------------------------------------
+
+4. What is the significance of make(chan func(), 10)?
+
+The statement make(chan func(), 10) in your Go code creates a buffered channel that can hold up to 10 elements.The channel is buffered with a capacity of 10, meaning it can store up to 10 function elements without blocking the sender.The buffer allows the sender to send up to 10 functions into the channel without waiting for a receiver to read them. In summary, make(chan func(), 10) creates a buffered channel with a capacity of 10, enabling efficient and asynchronous communication between the task producer and multiple worker goroutines. This setup enhances the concurrency and scalability of the application by allowing tasks to be queued and processed concurrently.
+------------------------------------------------------------------------------------------------------------------------
+
+5. Why is “HERE1” not getting printed?
+
+In your Go code, "HERE1" is not getting printed because the main function exits before the goroutines have a chance to process the function sent to the channel. 
+
+-----------------------------------------------------------------------------------------------------------------------------------
